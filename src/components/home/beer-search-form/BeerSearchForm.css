@@ -1,0 +1,21 @@
+.beer-search-form {
+    display: flex;
+    justify-content: center;
+}
+
+.beer-search-form input {
+    width: 300px;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.beer-search-form button {
+    width: 100px;
+    color: white;
+    border-radius: 10px;
+    background-color: #FFD10A;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+}

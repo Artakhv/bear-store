@@ -1,0 +1,40 @@
+.header {
+    text-align: center;
+    background-image: url("../../resources/images/header-background-photo.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 250px;
+  }
+
+.navbar {
+  background-color: #DB1E38;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar a {
+  text-decoration: none;
+}
+
+.navbar-item {
+  font-size: 18px;
+  font-weight: 500;
+  height: 32px;
+  color: white;
+  padding-top: 8px;
+  width: 100px;
+  text-align: center;
+}
+
+.navbar-item:hover {
+  background-color: #DDC264;
+}
+
+.navbar-container {
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}

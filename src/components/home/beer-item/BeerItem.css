@@ -1,0 +1,37 @@
+.beer-item-container {
+  margin: 20px;
+}
+
+.beer-item-container a {
+  text-decoration: none;
+  line-height: 25px;
+  color: black;
+}
+
+.beer-item {
+  text-align: center;
+  border: 2px solid #ffd507;
+  padding: 15px;
+  border-radius: 20px;
+  width: 200px;
+}
+
+.beer-item:hover {
+  border-color: #AE3A29;
+  color: #AE3A29;
+}
+
+.beer-item-img-container {
+  display: flex;
+  justify-content: center;
+}
+
+.beer-item img {
+  height: 180px;
+  margin: 0 auto;
+}
+
+.beer-item-name {
+  margin-top: 5px;
+  height: 45px;
+}

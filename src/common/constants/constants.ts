@@ -1,0 +1,1 @@
+export const perPageDefaultValue: number = 18;

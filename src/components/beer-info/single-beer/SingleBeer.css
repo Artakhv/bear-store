@@ -1,0 +1,23 @@
+.single-beer-container {
+    width: 800px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 30px auto;
+    font-size: 13px;
+}
+
+.single-beer-container .single-beer-image-container {
+    width: 300px;
+    display: flex;
+    justify-content: center;
+}
+
+.single-beer-container img {
+    height: 300px;
+}
+
+.single-beer-content {
+    width: 300px;
+    margin-top: 15px;
+}
