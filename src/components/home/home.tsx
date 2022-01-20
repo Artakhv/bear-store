@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import "./home.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  GetBeers,
   GetBeersBy,
   InitialBeerState,
 } from "../../app/features/beers/beersSlice";
@@ -15,6 +14,7 @@ import {
   perPageRequestLimit,
 } from "../../common/constants/constants";
 import { toValidDateForRequest } from "../../common/util/util";
+import Loading from "../../common/components/loading/Loading";
 
 function Home() {
   const dispatch = useDispatch();
@@ -26,6 +26,9 @@ function Home() {
 
   useEffect(() => {
     window.addEventListener("scroll", isScrolling);
+    return () => {
+      window.removeEventListener("scroll", isScrolling);
+    };
   }, []);
 
   useEffect(() => {
@@ -58,15 +61,12 @@ function Home() {
   }, [isFetching]);
 
   const isScrolling = () => {
+    console.log(`${Math.floor(window.innerHeight + document.documentElement.scrollTop)} !==
+    ${Math.floor(Math.floor(document.documentElement.offsetHeight))}`)
     if (
       Math.floor(window.innerHeight + document.documentElement.scrollTop) !==
       Math.floor(document.documentElement.offsetHeight)
     ) {
-      console.log(
-        `${window.innerHeight}+${document.documentElement.scrollTop} ${
-          window.innerHeight + document.documentElement.scrollTop
-        } = ${document.documentElement.offsetHeight}`
-      );
       return;
     }
     setIsFetching(true);
@@ -92,29 +92,42 @@ function Home() {
   return (
     <div className="home-container">
       <div className="beer-search-form">
-        <input
-          name="query"
-          className="beer-search-form-query"
-          value={query}
-          onChange={handleOnChange}
-        />
-      </div>
-      <div className="brewed-before-after">
-        <input
-          type="date"
-          name="brewedAfter"
-          value={brewedAfter}
-          onChange={handleOnChange}
-        />
-        <input
-          type="date"
-          name="brewedBefore"
-          value={brewedBefore}
-          onChange={handleOnChange}
-        />
+        <label>
+          <div>
+            <div className="beer-search-labal"> Search by name</div>
+            <input
+              name="query"
+              className="beer-search-form-query"
+              value={query}
+              onChange={handleOnChange}
+            />
+          </div>
+        </label>
+        <label>
+          <div className="beer-search-labal"> Brewed after</div>
+          <div>
+            <input
+              type="date"
+              name="brewedAfter"
+              value={brewedAfter}
+              onChange={handleOnChange}
+            />
+          </div>
+        </label>
+        <label>
+          <div className="beer-search-labal">Brewed before</div>
+          <div>
+            <input
+              type="date"
+              name="brewedBefore"
+              value={brewedBefore}
+              onChange={handleOnChange}
+            />
+          </div>
+        </label>
       </div>
       {loading ? (
-        <p>loading...</p>
+        <Loading/>
       ) : (
         <div>
           <div>{beers && <Beers beersList={beers} />}</div>

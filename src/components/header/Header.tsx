@@ -20,7 +20,7 @@ function Header() {
           </div>
           <div>
             <Link to="/cart">
-              <div className="navbar-item"> Cart {cartState.cartBeers.length}</div>
+              <div className="navbar-item"> Cart ( {cartState.cartBeers.length} )</div>
             </Link>
           </div>
         </div>

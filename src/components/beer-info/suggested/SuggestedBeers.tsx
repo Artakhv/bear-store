@@ -6,6 +6,7 @@ import {
   InitialSuggestedBeerState,
 } from "../../../app/features/suggestedBeers/suggestedBeers";
 import { RootStore } from "../../../app/store/store";
+import Loading from "../../../common/components/loading/Loading";
 import BeerItem from "../../home/beer-item/BeerItem";
 import "./SuggestedBeers.css";
 
@@ -23,7 +24,6 @@ function SuggestedBeers() {
 
   useEffect(() => {
     if (singleBeerState.singleBeer?.abv && singleBeerState.singleBeer?.ibu)
-      ///todo
       dispatch(
         GetSingleBeerSuggestedItems(
           singleBeerState.singleBeer?.abv,
@@ -36,7 +36,7 @@ function SuggestedBeers() {
   return (
     <div>
       {loading ? (
-        loading
+        <Loading />
       ) : (
         <div className="suggested-list-container">
           {suggestedBeers?.map((suggeBeer) => {

@@ -1,6 +1,6 @@
 import { IBeer } from "../../../common/types/BeersTypes";
 import { Dispatch } from 'redux';
-import { getBeersByName, getSingleBeerSuggestedItems } from "../../../services/beersService";
+import {  getSingleBeerSuggestedItems } from "../../../services/beersService";
 
 export interface InitialSuggestedBeerState {
     loading: boolean;

@@ -1,12 +1,11 @@
 import { IBeer } from "../../../common/types/BeersTypes";
 import { Dispatch } from 'redux';
-import { getBeers, getBeersBy, getBeersByName } from "../../../services/beersService";
-import { perPageDefaultValue } from "../../../common/constants/constants";
+import { getBeersBy } from "../../../services/beersService";
 
 export interface InitialBeerState {
     loading: boolean;
     beers?: IBeer[];
-    lazyLoading?: boolean;
+    errorMessage?: string
 }
 
 const initialState: InitialBeerState = {
@@ -35,30 +34,6 @@ export interface BeerSucess {
     };
 }
 
-export function GetBeers(perPage: number = perPageDefaultValue) { /// todo
-    return async function (dispatch: Dispatch, getState: Function) {
-        dispatch({
-            type: BEERS_LOADING,
-            payload: {
-                beers: getState().beers?.beers
-            }
-        });
-
-        getBeers(perPage)
-            .then(res => {
-                dispatch({
-                    type: BEERS_SUCCESS,
-                    payload: res.data
-                })
-            })
-            .catch((e) => {
-                dispatch({
-                    type: BEERS_FAIL
-                })
-            });
-    }
-}
-
 export function GetBeersBy(perPage: number, brewedAfter: string, brewedBefore: string, byName: string) { /// todo
     return async function (dispatch: Dispatch, getState: Function) {
         dispatch({
@@ -83,32 +58,6 @@ export function GetBeersBy(perPage: number, brewedAfter: string, brewedBefore: s
     }
 }
 
-export function GetBeersByName(byName: string) {
-    return async function (dispatch: Dispatch, getState: Function) {
-        dispatch({
-            type: BEERS_LOADING,
-            payload: {
-                beers: getState().beers?.beers
-            }
-        });
-
-        getBeersByName(byName)
-            .then(res => {
-                dispatch({
-                    type: BEERS_SUCCESS,
-                    payload: res.data
-                })
-            })
-            .catch((e) => {
-                dispatch({
-                    type: BEERS_FAIL
-                })
-            });
-    }
-}
-
-
-
 export function BeersReducer(state: InitialBeerState = initialState, action: BeerFail | BeerLoading | BeerSucess) {
     switch (action.type) {
         case BEERS_FAIL:
@@ -122,7 +71,6 @@ export function BeersReducer(state: InitialBeerState = initialState, action: Bee
             return {
                 loading: isLoadingLazy,
                 beers: action.payload?.beers,
-                lazyLoading: isLoadingLazy
             }
         }
         case BEERS_SUCCESS: {

@@ -6,20 +6,26 @@
 .beer-search-form {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
-.beer-search-form input {
-  width: 300px;
+.beer-search-form input,
+.beer-search-form-query {
+  width: 150px;
   padding: 5px;
   border-radius: 10px;
   margin: 5px;
+}
+
+.beer-search-form-query {
+  padding: 6.5px !important;
 }
 
 .beer-search-form button {
   width: 100px;
   color: white;
   border-radius: 10px;
-  background-color: #FFD10A;
+  background-color: #ffd10a;
   padding: 5px;
   margin: 5px;
   cursor: pointer;
@@ -29,4 +35,9 @@
   height: 50px;
   width: 400px;
   margin: 0 auto;
+}
+
+.beer-search-labal {
+  text-align: center;
+  color: #db1e38;
 }
