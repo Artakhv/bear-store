@@ -61,8 +61,6 @@ function Home() {
   }, [isFetching]);
 
   const isScrolling = () => {
-    console.log(`${Math.floor(window.innerHeight + document.documentElement.scrollTop)} !==
-    ${Math.floor(Math.floor(document.documentElement.offsetHeight))}`)
     if (
       Math.floor(window.innerHeight + document.documentElement.scrollTop) !==
       Math.floor(document.documentElement.offsetHeight)
