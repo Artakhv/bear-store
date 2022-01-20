@@ -5,7 +5,8 @@ import { perPageDefaultValue } from "../../../common/constants/constants";
 
 export interface InitialBeerState {
     loading: boolean;
-    beers?: IBeer[]
+    beers?: IBeer[];
+    lazyLoading?: boolean;
 }
 
 const initialState: InitialBeerState = {
@@ -18,6 +19,9 @@ export const BEERS_FAIL = 'BEERS_FAIL';
 
 export interface BeerLoading {
     type: typeof BEERS_LOADING;
+    payload: {
+        beers: IBeer
+    }
 }
 
 export interface BeerFail {
@@ -32,9 +36,12 @@ export interface BeerSucess {
 }
 
 export function GetBeers(perPage: number = perPageDefaultValue) { /// todo
-    return async function (dispatch: Dispatch) {
+    return async function (dispatch: Dispatch, getState: Function) {
         dispatch({
-            type: BEERS_LOADING
+            type: BEERS_LOADING,
+            payload: {
+                beers: getState().beers?.beers
+            }
         });
 
         getBeers(perPage)
@@ -54,9 +61,12 @@ export function GetBeers(perPage: number = perPageDefaultValue) { /// todo
 
 
 export function GetBeersByName(byName: string) {
-    return async function (dispatch: Dispatch) {
+    return async function (dispatch: Dispatch, getState: Function) {
         dispatch({
-            type: BEERS_LOADING
+            type: BEERS_LOADING,
+            payload: {
+                beers: getState().beers?.beers
+            }
         });
 
         getBeersByName(byName)
@@ -85,14 +95,18 @@ export function BeersReducer(state: InitialBeerState = initialState, action: Bee
                 }
             }
         case BEERS_LOADING: {
+            const isLoadingLazy = action.payload?.beers ? false : true
             return {
-                loading: true
+                loading: isLoadingLazy,
+                beers: action.payload?.beers,
+                lazyLoading: isLoadingLazy
             }
         }
         case BEERS_SUCCESS: {
             return {
                 loading: false,
-                beers: action.payload
+                beers: action.payload,
+                lazyLoading: false
             }
         }
         default: {

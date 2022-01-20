@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./home.css";
-import BeerSearchForm from "./beer-search-form/BeerSearchForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
   GetBeers,
@@ -8,16 +7,35 @@ import {
 } from "../../app/features/beers/beersSlice";
 import Beers from "./beers/Beers";
 import { RootStore } from "../../app/store/store";
-import { perPageDefaultValue } from "../../common/constants/constants";
+import {
+  perPageDefaultValue,
+  perPageRequestLimit,
+} from "../../common/constants/constants";
 
 function Home() {
   const dispatch = useDispatch();
-  const [perPage, setPerPage] = useState<number>(perPageDefaultValue); // todo
+  const [perPage, setPerPage] = useState<number>(perPageDefaultValue);
+  const [query, setQuery] = useState("");
+
+  const [isFetching, setIsFetching] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", isScrolling);
+  }, []);
 
   useEffect(() => {
     dispatch(GetBeers(perPage));
-    window.addEventListener("scroll", isScrolling);
-  }, [perPage, dispatch]);
+  }, [query]);
+
+  useEffect(() => {
+    if (!isFetching) return;
+    const perPageNext = perPage + 9;
+    setPerPage(
+      perPageNext > perPageRequestLimit ? perPageRequestLimit : perPageNext
+    );
+    dispatch(GetBeers(perPage));
+    setIsFetching(false);
+  }, [isFetching]);
 
   const isScrolling = () => {
     if (
@@ -26,7 +44,7 @@ function Home() {
     ) {
       return;
     }
-    setPerPage(perPage + 9);
+    setIsFetching(true);
   };
 
   const beersState: InitialBeerState = useSelector((state: RootStore) => {
@@ -37,7 +55,17 @@ function Home() {
 
   return (
     <div className="home-container">
-      <BeerSearchForm />
+      <div className="beer-search-form">
+        <input
+          name="query"
+          className="beer-search-form-query"
+          value={query}
+          onChange={(e) => {
+            e.preventDefault();
+            setQuery(e.target.value);
+          }}
+        />
+      </div>
       {loading ? (
         <p>loading...</p>
       ) : (
