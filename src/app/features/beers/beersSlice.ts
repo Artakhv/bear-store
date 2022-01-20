@@ -1,6 +1,6 @@
 import { IBeer } from "../../../common/types/BeersTypes";
 import { Dispatch } from 'redux';
-import { getBeers, getBeersByName } from "../../../services/beersService";
+import { getBeers, getBeersBy, getBeersByName } from "../../../services/beersService";
 import { perPageDefaultValue } from "../../../common/constants/constants";
 
 export interface InitialBeerState {
@@ -59,6 +59,29 @@ export function GetBeers(perPage: number = perPageDefaultValue) { /// todo
     }
 }
 
+export function GetBeersBy(perPage: number, brewedAfter: string, brewedBefore: string, byName: string) { /// todo
+    return async function (dispatch: Dispatch, getState: Function) {
+        dispatch({
+            type: BEERS_LOADING,
+            payload: {
+                beers: getState().beers?.beers
+            }
+        });
+
+        getBeersBy(perPage, brewedAfter, brewedBefore, byName)
+            .then(res => {
+                dispatch({
+                    type: BEERS_SUCCESS,
+                    payload: res.data
+                })
+            })
+            .catch((e) => {
+                dispatch({
+                    type: BEERS_FAIL
+                })
+            });
+    }
+}
 
 export function GetBeersByName(byName: string) {
     return async function (dispatch: Dispatch, getState: Function) {

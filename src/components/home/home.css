@@ -24,3 +24,9 @@
   margin: 5px;
   cursor: pointer;
 }
+
+.brewed-before-after {
+  height: 50px;
+  width: 400px;
+  margin: 0 auto;
+}

@@ -7,6 +7,13 @@ export function getBeers(perPage: number = perPageDefaultValue) {
     return axios.get<IBeer[]>(`${baseURL}beers?page=1&per_page=${perPage}`);
 }
 
+// https://api.punkapi.com/v2/beers?page=1&per_page=80&brewed_after=1-2000&brewed_before=1-2022
+export function getBeersBy(perPage: number, brewedAfter: string, brewedBefore: string, byName: string) {
+    const byNameParam = byName ? `&beer_name=${byName}` : '';
+    return axios
+        .get<IBeer[]>(`${baseURL}beers?page=1&per_page=${perPage}&brewed_after=${brewedAfter}&brewed_before=${brewedBefore}${byNameParam}`);
+}
+
 export function getBeersByName(byName: string) {
     return axios.get<IBeer[]>(`${baseURL}beers?beer_name=${byName}`);
 }
